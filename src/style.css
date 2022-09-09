@@ -15,7 +15,16 @@ body {
   font-family: "Dosis", sans-serif;
   color: var(--white-primary);
   background-color: var(--black-primary);
+  
 }
+li{
+  list-style: none;
+}
+
+hr {
+  border: 1px solid rgb(61, 61, 61);
+  margin: 5px;
+  }
 
 .location-container {
   width: 97%;
@@ -56,4 +65,43 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 20px;
+}
+.status-character .ball-status{
+  
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  
+}
+.status-character{
+  position: absolute;
+  background-color: var(--black-dark);
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 5px 20px;
+  border-radius: .0rem .4rem 4rem 0rem;
+  margin-top: 15px;
+}
+.card-character{
+  background-color: var(--black-dark);
+  margin: 20px;
+}
+.card-character h2{
+  text-align: center;
+  font-weight: lighter;
+  font-size: 28px;
+}
+.card-character-data h3{
+  font-weight: bold;
+  font-size: 18px;
+  color: gray;
+}
+.card-character-data p{
+  font-weight: normal;
+  font-size: 18px;
+  color: var(--white-primary);
+}
+.card-character-data{
+  padding: 10px;
 }

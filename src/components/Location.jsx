@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import loaders from "../loaders.json";
+import Character from "./Character";
 
 const Location = () => {
   const randNumber = (max) => {
@@ -32,8 +33,9 @@ const Location = () => {
       .get(`https://rickandmortyapi.com/api/location/${randNumber(126)}`)
       .then((res) => {
         setLocation(res.data);
+        setCharacters(res.data.residents)
         setLoader(false);
-        findCharacters(res.data.residents);
+        
       });
   };
   useEffect(() => {
@@ -83,7 +85,9 @@ const Location = () => {
       );
     }
   };
+  console.log(characters)
 
+ 
   return (
     <>
       <header className="header">
@@ -102,9 +106,12 @@ const Location = () => {
       <section className="location-container">{view()}</section>
       <section className="characters-container">
         <ul>
-          {location.residents?.map((item) => (
-            <li>{item}</li>
-          ))}
+      
+          characters
+     {location.residents?.map(item => (
+        <Character data={item}/>
+     ))}
+       
         </ul>
       </section>
     </>
