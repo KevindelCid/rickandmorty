@@ -47,7 +47,7 @@ hr {
 }
 
 .header {
-  background-image: url("https://i.postimg.cc/GhNWFG1d/rick-morty-season-5-3.webp");
+  background-image: url("https://i.postimg.cc/fLzmgBPp/rick-morty-season-5-3-min-1.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -126,6 +126,7 @@ hr {
   background-color: rgb(0, 95, 0);
   color: var(--white-primary);
   cursor: pointer;
+  
 }
 .btn-circular-primary:hover {
   background-color: rgb(0, 173, 0);
