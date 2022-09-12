@@ -2,17 +2,20 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import loaders from "../loaders.json";
 import Character from "./Character";
+import Pagination from "./Pagination";
 
 const Location = () => {
+  const [location, setLocation] = useState({});
+  const [loader, setLoader] = useState(true);
+  const [search, setSearch] = useState("");
+
+  // generar numero random
   const randNumber = (max) => {
     const rand = Math.floor(Math.random() * max);
     return rand;
   };
 
-  const [location, setLocation] = useState({});
-  const [loader, setLoader] = useState(true);
-  const [search, setSearch] = useState("");
-  const [characters, setCharacters] = useState({});
+  // hace la busqueda del input del header
 
   function getSearch(find) {
     if (find === "") {
@@ -23,41 +26,25 @@ const Location = () => {
         .then((res) => {
           setLocation(res.data);
           setLoader(false);
-          findCharacters(res.data.residents);
         });
     }
   }
 
+  // obtener los datos inciales de la api
   const getApi = () => {
     axios
       .get(`https://rickandmortyapi.com/api/location/${randNumber(126)}`)
       .then((res) => {
         setLocation(res.data);
-        setCharacters(res.data.residents)
+
         setLoader(false);
-        
       });
   };
+
+  // Ejecutamos la funcion getApi
   useEffect(() => {
     getApi();
   }, []);
-
-  const findCharacters = (residents) => {
-    const character = [];
-    residents.map((item) => {
-      axios.get(item).then((res) => {
-        character.push(res.data);
-        setCharacters(character);
-        console.log(characters);
-      });
-    });
-
-    // residents?.map((resident) => {
-    //   axios.get(resident).then((res) => {
-    //     console.log(res.data);
-    //   });
-    // });
-  };
 
   const view = () => {
     if (loader === true) {
@@ -85,12 +72,34 @@ const Location = () => {
       );
     }
   };
-  console.log(characters)
 
- 
+  const getPaginationLength = (pagination) => {
+    const paginateResidents = [[]];
+
+    let contador = 1;
+
+    for (let i = 0; i <= location.residents?.length; i++) {
+      if (i === pagination * contador) {
+        contador++;
+
+        paginateResidents.push([]);
+        paginateResidents[contador - 1]?.push(location.residents[i]);
+      } else {
+        paginateResidents[contador - 1]?.push(location.residents[i]);
+      }
+    }
+    return paginateResidents;
+  };
+
   return (
     <>
       <header className="header">
+        <img
+         className="header-ricknmorty"
+          src="https://i.postimg.cc/Bb3VYBn1/Rick-and-Morty.webp"
+          alt="rick and morty"
+          width="200"
+        />
         <input
           className="header-input"
           type="text"
@@ -102,18 +111,20 @@ const Location = () => {
           }}
         />
       </header>
-
       <section className="location-container">{view()}</section>
-      <section className="characters-container">
-        <ul>
-      
-          characters
-     {location.residents?.map(item => (
-        <Character data={item}/>
-     ))}
-       
-        </ul>
-      </section>
+      <button
+        type="button"
+        className="btn-circular-primary
+btn-circular-primary"
+        onClick={getApi}
+      >
+        <i class="fa-solid fa-shuffle"></i>
+      </button>
+      Characters
+      <Pagination characters={getPaginationLength(5)} />
+      {/* {location.residents?.map((url) => (
+            <Character url={url} key={url} />
+          ))} */}
     </>
   );
 };
